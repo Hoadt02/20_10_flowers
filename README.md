@@ -74,12 +74,13 @@ Nếu thay ảnh cắt cánh hoa (`petalSource`), chỉnh lại `rects` cho đú
 
 ### Nhạc nền
 
-Trình phát dạng đĩa than ở góc dưới phải, phát lần lượt rồi quay vòng:
+Trình phát dạng đĩa than ở góc dưới phải, phát lặp lại:
 
-| File | Bài | Bản thu | Giấy phép |
+| File | Bài | Tác giả | Giấy phép |
 |---|---|---|---|
-| `assets/music/nocturne.mp3` | Chopin, Nocturne Op. 9 số 2 | Frank Lévy | Public domain |
-| `assets/music/gymnopedie.mp3` | Satie, Gymnopédie số 1 | Michael Laucke | Public domain |
+| `assets/music/canon-in-d.mp3` | Canon in D Major (bản phối của Pachelbel) | Kevin MacLeod (incompetech.com) | CC BY 3.0, cần ghi tên tác giả |
+
+Tên "Kevin MacLeod" hiện ngay trong trình phát, đó cũng là phần ghi công theo giấy phép. Đừng xoá nó.
 
 - Trình duyệt không cho tự phát nhạc, nên nhạc bắt đầu ở **lần chạm đầu tiên** bất kỳ đâu trên trang
   (ví dụ bấm "Nhận hoa từ anh"). Bong bóng "Chạm để nghe nhạc" nhắc việc này.
