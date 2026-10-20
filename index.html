@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Minh Loan – 20.10</title>
+<meta name="description" content="Món quà 20/10 gửi cô dâu tương lai của anh.">
+<link rel="icon" href="assets/tulips-pink.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Corinthia:wght@400;700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
+
+<style>
+/* ================= TOKENS ================= */
+:root{
+  --bg:#faeff2;          /* hồng phấn nhạt */
+  --bg-2:#f5e1e7;
+  --paper:#fffafb;
+  --ink:#2b1a22;         /* tím mận đậm thay cho đen */
+  --ink-soft:#7c5f6b;
+  --line:rgba(43,26,34,.12);
+  --sage:#b98a9c;
+  --sage-2:#e2c3cf;
+  --tulip:#d6577a;       /* hồng rose: màu nhấn chính */
+  --tulip-soft:#f3b9c8;
+  --plum:#9b6b8f;
+  --shadow:0 20px 60px rgba(120,40,70,.14);
+  --r:22px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'EB Garamond',Georgia,serif;font-size:1.08rem;color:var(--ink);background:var(--bg);min-height:100vh;overflow-x:hidden;cursor:default;line-height:1.75}
+.script{font-family:'Corinthia',cursive;font-weight:700}
+img{display:block;max-width:100%}
+.serif{font-family:'Cormorant Garamond',Georgia,serif}
+
+/* nền: một vệt sáng ấm + hạt film nhẹ (tĩnh, vẽ 1 lần) */
+.glow{position:fixed;inset:0;z-index:0;pointer-events:none;background:
+  radial-gradient(900px 600px at 15% 0%,rgba(243,185,200,.55),transparent 60%),
+  radial-gradient(700px 500px at 100% 100%,rgba(214,87,122,.16),transparent 60%),
+  radial-gradient(600px 400px at 60% 50%,rgba(255,255,255,.5),transparent 60%)}
+.grain{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.07;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .9 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+/* vườn hoa nền: ảnh hoa tách nền trôi lơ lửng + trượt nhẹ theo cuộn (chỉ transform) */
+.garden{position:fixed;inset:0;z-index:2;pointer-events:none;overflow:hidden}
+/* lớp sương mỏng phủ lên vườn hoa cho mơ màng (tĩnh, không animate) */
+.haze{position:fixed;inset:0;z-index:3;pointer-events:none;background:radial-gradient(ellipse 70% 60% at 50% 45%,rgba(255,255,255,.22),rgba(250,239,242,0) 60%),linear-gradient(180deg,rgba(255,255,255,.18),rgba(250,239,242,0) 30%,rgba(250,239,242,0) 70%,rgba(255,255,255,.22))}
+.garden .fl{position:absolute;top:0;left:0;will-change:transform}
+.garden .fl img{display:block;width:100%;animation:floatF ease-in-out infinite;will-change:transform;transform:rotate(var(--r0)) scaleX(var(--sx))}
+@keyframes floatF{0%,100%{transform:translateY(0) rotate(var(--r0)) scaleX(var(--sx))}50%{transform:translateY(-16px) rotate(var(--r1)) scaleX(var(--sx))}}
+#petals{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:5;will-change:transform}
+#burst{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:60;will-change:transform}
+
+/* ================= LAYOUT ================= */
+main{position:relative;z-index:10}
+.wrap{max-width:1140px;margin:0 auto;padding:0 24px}
+section{padding:110px 0}
+.label{font-size:.8rem;letter-spacing:.3em;text-transform:uppercase;color:var(--ink-soft);display:flex;align-items:center;gap:14px}
+.label::before{content:"";width:28px;height:1px;background:var(--ink-soft);opacity:.6}
+.h2{font-family:'Corinthia',cursive;font-weight:700;font-size:clamp(3.2rem,7vw,5.6rem);line-height:1;margin:10px 0 10px}
+.h2 i{font-style:normal;color:var(--tulip)}
+.lead{color:var(--ink-soft);max-width:540px;font-size:1.12rem;font-style:italic}
+.btn{display:inline-flex;align-items:center;gap:12px;padding:15px 30px;border-radius:999px;border:1px solid var(--ink);background:var(--ink);color:#fff;font:500 1.02rem 'EB Garamond',serif;letter-spacing:.03em;cursor:pointer;transition:transform .25s,background .25s,color .25s}
+.btn:hover{transform:translateY(-2px);background:var(--tulip);border-color:var(--tulip)}
+.btn .dot{width:8px;height:8px;border-radius:50%;background:var(--tulip);animation:pulse 1.6s ease-in-out infinite}
+.btn:hover .dot{background:#fff}
+@keyframes pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.6);opacity:.6}}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn.ghost:hover{background:var(--ink);color:#fff}
+
+/* ================= HERO ================= */
+.hero{min-height:100vh;display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center;padding:120px 0 80px}
+.hero .copy{opacity:0;animation:fadeUp 1.2s .2s cubic-bezier(.2,.8,.2,1) forwards}
+.hero .kicker{font-size:.8rem;letter-spacing:.34em;text-transform:uppercase;color:var(--ink-soft);display:flex;gap:16px;align-items:center}
+.hero .kicker b{font-weight:500;color:var(--tulip)}
+.hero h1{font-family:'Corinthia',cursive;font-weight:700;font-size:clamp(4.8rem,13vw,11rem);line-height:.9;margin:20px 0 6px}
+.hero h1 .l{display:inline-block;opacity:0;transform:translateY(30px);animation:letter 1.2s cubic-bezier(.2,.8,.2,1) forwards}
+.hero h1 em{font-style:normal;color:var(--tulip)}
+.hero .line{width:64px;height:1px;background:var(--ink);margin:22px 0;opacity:.5}
+.hero p{max-width:470px;color:var(--ink-soft);font-size:1.18rem}
+.hero p b{font-weight:500;color:var(--ink)}
+.hero .actions{display:flex;gap:14px;flex-wrap:wrap;margin-top:34px}
+.hero .frame{position:relative;height:min(78vh,720px);border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow);opacity:0;animation:fadeUp 1.4s .5s cubic-bezier(.2,.8,.2,1) forwards}
+.hero .frame img{width:100%;height:100%;object-fit:cover;object-position:62% 50%;animation:kenburns 40s ease-in-out infinite alternate;will-change:transform}
+@keyframes kenburns{0%{transform:scale(1)}100%{transform:scale(1.1) translate(-2%,1%)}}
+.hero .tag{position:absolute;left:18px;bottom:18px;background:rgba(255,253,249,.92);border-radius:14px;padding:12px 16px;font-size:.8rem;color:var(--ink-soft);display:flex;align-items:center;gap:10px;animation:floatY 5s ease-in-out infinite;will-change:transform}
+.hero .tag b{font-family:'Corinthia',cursive;font-size:1.7rem;font-weight:700;color:var(--ink);line-height:1}
+.hero .frame::after,.cd-photo::after,.vows .photo::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(214,87,122,.16));pointer-events:none}
+.cd-photo,.vows .photo{position:relative}
+@keyframes fadeUp{to{opacity:1;transform:none}}
+@keyframes letter{to{opacity:1;transform:none}}
+@keyframes floatY{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+
+/* ================= TICKER ================= */
+.ticker{border-top:1px solid var(--line);border-bottom:1px solid var(--line);overflow:hidden;white-space:nowrap;padding:16px 0;background:rgba(255,250,251,.55)}
+.ticker .track{display:inline-block;animation:scroll 50s linear infinite;will-change:transform}
+.ticker span{font-family:'Corinthia',cursive;font-weight:700;font-size:2rem;line-height:1;color:var(--ink);margin:0 34px;position:relative}
+.ticker span::after{content:"";position:absolute;right:-38px;top:50%;width:6px;height:6px;border-radius:50%;background:var(--tulip);transform:translateY(-50%)}
+@keyframes scroll{to{transform:translateX(-50%)}}
+
+/* ================= COUNTDOWN ================= */
+.cd-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.cd-photo{border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow);aspect-ratio:4/5;transform:rotate(-1.5deg);animation:floatR 7s ease-in-out infinite;will-change:transform}
+.cd-photo img{width:100%;height:100%;object-fit:cover;object-position:50% 55%}
+@keyframes floatR{0%,100%{transform:rotate(-1.5deg) translateY(0)}50%{transform:rotate(-1.5deg) translateY(-10px)}}
+.countdown{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:34px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.cd{padding:26px 8px;text-align:center;border-right:1px solid var(--line)}
+.cd:last-child{border-right:none}
+.cd .n{font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(2.6rem,5vw,4.2rem);line-height:1;color:var(--ink);font-variant-numeric:tabular-nums}
+.cd .l{font-size:.68rem;letter-spacing:.24em;text-transform:uppercase;color:var(--ink-soft);margin-top:8px}
+.cd-grid .h2{font-size:clamp(3rem,5.4vw,4.6rem)}
+.wedding-note{margin-top:22px;color:var(--ink-soft);font-style:italic}
+.wedding-note b{color:var(--ink);font-weight:500}
+
+/* ================= CARDS ================= */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:30px 24px;margin-top:50px}
+.slot{min-width:0}
+.pola{position:relative;perspective:1200px;cursor:pointer;animation:floatY 6s ease-in-out infinite;will-change:transform}
+.pola .card{position:relative;aspect-ratio:4/5;transform-style:preserve-3d;transition:transform .9s cubic-bezier(.4,0,.2,1)}
+.pola.flipped .card{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:18px;overflow:hidden;background:var(--paper);box-shadow:0 12px 40px rgba(60,40,20,.12);border:1px solid rgba(255,255,255,.6)}
+.face.front img{width:100%;height:100%;object-fit:cover;transition:transform .8s}
+.pola:hover .face.front img{transform:scale(1.05)}
+.face.front .n{position:absolute;top:14px;left:14px;background:rgba(255,250,251,.9);border-radius:999px;padding:5px 12px;font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink)}
+.face.front .open{position:absolute;right:14px;bottom:14px;width:40px;height:40px;border-radius:50%;background:rgba(255,253,249,.92);display:grid;place-items:center;color:var(--ink)}
+.face.front .open svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.6}
+.face.back{transform:rotateY(180deg);padding:26px 22px;display:flex;flex-direction:column;justify-content:space-between;background:linear-gradient(160deg,#fffafb,#f7e3ea)}
+.face.back .q{font-family:'Cormorant Garamond',serif;font-size:3rem;line-height:.6;color:var(--tulip);opacity:.6}
+.face.back p{font-size:1.02rem;line-height:1.6;color:var(--ink)}
+.face.back .sig{font-family:'Corinthia',cursive;font-weight:700;font-size:1.7rem;line-height:1;color:var(--tulip)}
+
+/* ================= LETTER ================= */
+.letter-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:60px;align-items:start}
+.env-wrap{position:sticky;top:90px}
+.envelope{position:relative;width:100%;max-width:420px;aspect-ratio:1.45;cursor:pointer;animation:floatY 6s ease-in-out infinite;will-change:transform}
+.envelope .body{position:absolute;inset:0;top:18%;background:#ecd2db;border-radius:14px;box-shadow:var(--shadow);overflow:hidden}
+.envelope .body::before,.envelope .body::after{content:"";position:absolute;bottom:0;width:50%;height:100%;background:#f3dde4}
+.envelope .body::before{left:0;clip-path:polygon(0 0,100% 100%,0 100%)}
+.envelope .body::after{right:0;clip-path:polygon(100% 0,100% 100%,0 100%)}
+.envelope .flap{position:absolute;left:0;right:0;top:18%;height:50%;background:#e4bfcc;clip-path:polygon(0 0,100% 0,50% 100%);transform-origin:top;transition:transform .8s cubic-bezier(.4,0,.2,1);z-index:4;border-radius:14px 14px 0 0}
+.envelope.open .flap{transform:rotateX(180deg);z-index:1}
+.envelope .seal{position:absolute;left:50%;top:58%;transform:translate(-50%,-50%);width:64px;height:64px;border-radius:50%;overflow:hidden;border:3px solid #fffdf9;box-shadow:0 8px 20px rgba(60,40,20,.25);z-index:5;transition:opacity .4s,transform .4s}
+.envelope .seal img{width:100%;height:100%;object-fit:cover}
+.envelope.open .seal{opacity:0;transform:translate(-50%,-50%) scale(.3)}
+.envelope .paper{position:absolute;left:6%;right:6%;top:26%;height:70%;background:var(--paper);border-radius:10px;z-index:2;transition:transform .9s .3s cubic-bezier(.4,0,.2,1);padding:18px 22px 16px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;text-align:center;box-shadow:0 4px 20px rgba(0,0,0,.06)}
+.envelope.open .paper{justify-content:center}
+.envelope.open .paper{transform:translateY(-46%)}
+.envelope .paper h3{font-family:'Corinthia',cursive;font-weight:700;font-size:2.4rem;line-height:1;color:var(--ink)}
+.envelope .paper p{font-size:.82rem;color:var(--ink-soft);margin-top:4px}
+.envelope .tap{position:absolute;left:0;right:0;bottom:-36px;text-align:center;font-size:.7rem;letter-spacing:.24em;text-transform:uppercase;color:var(--ink-soft)}
+.envelope.open .tap{opacity:0}
+.letter{background:var(--paper);border-radius:var(--r);box-shadow:var(--shadow);padding:48px 44px;font-size:1.16rem;line-height:1.85;opacity:0;transform:translateY(30px);transition:opacity .9s,transform .9s;display:none;position:relative}
+.letter.show{display:block;opacity:1;transform:none}
+.letter h3{font-family:'Corinthia',cursive;font-weight:700;font-size:3rem;line-height:1;margin-bottom:18px;color:var(--tulip)}
+.letter p{margin-bottom:16px}
+.letter p b{font-weight:600}
+.letter .sign{font-family:'Corinthia',cursive;font-weight:700;font-size:2.4rem;line-height:1;text-align:right;margin-top:24px;color:var(--ink)}
+.letter .stamp{position:absolute;top:22px;right:22px;width:54px;height:54px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:.9rem;color:var(--ink-soft);transform:rotate(-12deg)}
+
+/* ================= VOWS ================= */
+.vows{display:grid;grid-template-columns:1.1fr .9fr;gap:60px;align-items:stretch}
+.vow-paper{background:var(--paper);border-radius:var(--r);box-shadow:var(--shadow);padding:46px 44px;font-size:1.16rem;line-height:1.95;min-height:420px}
+.vow-paper h3{font-family:'Corinthia',cursive;font-weight:700;font-size:2.8rem;line-height:1;margin-bottom:12px;color:var(--tulip)}
+.vow-paper div{position:relative;padding-left:22px}
+.vow-paper div::before{content:"";position:absolute;left:0;top:.95em;width:10px;height:1px;background:var(--tulip)}
+.vow-paper h3,.vow-paper .end{padding-left:0}
+.vow-paper h3::before,.vow-paper .end::before{display:none}
+.vow-paper .end{font-family:'Corinthia',cursive;font-weight:700;font-size:2.2rem;line-height:1.2;color:var(--tulip);margin-top:10px}
+.vow-paper .cursor{display:inline-block;width:1px;height:1.1em;background:var(--ink);vertical-align:text-bottom;animation:blink 1s steps(1) infinite;margin-left:2px}
+@keyframes blink{50%{opacity:0}}
+.vows .photo{border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow);transform:rotate(1.5deg);animation:floatR2 8s ease-in-out infinite;will-change:transform}
+.vows .photo img{width:100%;height:100%;object-fit:cover;object-position:50% 60%;min-height:420px}
+@keyframes floatR2{0%,100%{transform:rotate(1.5deg) translateY(0)}50%{transform:rotate(1.5deg) translateY(-10px)}}
+
+/* ================= REASONS ================= */
+.reasons{display:flex;flex-wrap:wrap;gap:12px;margin-top:34px}
+.reasons span{padding:11px 20px;border:1px solid var(--line);border-radius:999px;font-size:1.02rem;font-style:italic;background:rgba(255,250,251,.7);transition:background .25s,color .25s,transform .25s}
+.reasons span:hover{background:var(--ink);color:#fff;transform:translateY(-2px)}
+
+/* ================= REVEAL BOX ================= */
+.reveal-box{position:fixed;inset:0;z-index:70;display:none;align-items:center;justify-content:center;padding:16px;background:rgba(31,28,25,.55)}
+.reveal-box.show{display:flex}
+.reveal-box .inner{position:relative;max-width:460px;width:100%;background:var(--paper);border-radius:var(--r);overflow:hidden;box-shadow:0 40px 100px rgba(0,0,0,.4);transform:scale(.7) rotate(-3deg);opacity:0;animation:pop .8s cubic-bezier(.2,.8,.2,1) forwards}
+@keyframes pop{to{transform:none;opacity:1}}
+.reveal-box img{width:100%;aspect-ratio:4/5;object-fit:cover;object-position:50% 70%}
+.reveal-box .cap{padding:22px 24px 26px}
+.reveal-box .cap h3{font-family:'Corinthia',cursive;font-weight:700;font-size:2.8rem;line-height:1;color:var(--tulip)}
+.reveal-box .cap p{color:var(--ink-soft);font-style:italic;margin-top:6px}
+.reveal-box .close{position:absolute;top:12px;right:12px;width:38px;height:38px;border-radius:50%;border:none;background:rgba(255,253,249,.9);cursor:pointer;font-size:1.2rem;display:grid;place-items:center}
+
+/* ================= FOOTER ================= */
+footer{position:relative;z-index:10;text-align:center;padding:80px 24px 90px;color:var(--ink-soft);font-style:italic;border-top:1px solid var(--line)}
+footer .big{font-family:'Corinthia',cursive;font-weight:700;font-size:clamp(3rem,8vw,5.6rem);color:var(--tulip);line-height:1;margin-bottom:14px;font-style:normal}
+footer .credit{font-size:.7rem;opacity:.6;margin-top:22px;letter-spacing:.05em}
+
+/* ================= MUSIC ================= */
+.music{position:fixed;right:18px;bottom:18px;z-index:65;width:50px;height:50px;border-radius:50%;border:1px solid var(--line);background:var(--paper);box-shadow:var(--shadow);cursor:pointer;display:none;place-items:center;color:var(--ink)}
+.music svg{width:22px;height:22px;fill:currentColor}
+.music.on{animation:spin 4s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ================= REVEAL ON SCROLL ================= */
+.reveal{opacity:0;transform:translateY(40px);transition:opacity .9s ease,transform .9s cubic-bezier(.2,.8,.2,1)}
+.reveal.in{opacity:1;transform:none}
+.reveal.gs{transition:none;opacity:1;transform:none}
+
+@media (max-width:860px){
+  section{padding:70px 0}
+  .hero{grid-template-columns:1fr;padding:96px 0 50px;gap:30px;min-height:auto}
+  .hero .frame{height:62vw;min-height:300px;order:-1}
+  .cd-grid,.letter-grid,.vows{grid-template-columns:1fr;gap:34px}
+  .cd-photo{max-width:380px;aspect-ratio:4/3}
+  .env-wrap{position:static}
+  .envelope{margin:0 auto}
+  .letter{padding:34px 24px}
+  .vow-paper{padding:34px 24px;min-height:auto}
+  .vows .photo img{min-height:260px}
+  .cards{grid-template-columns:repeat(2,1fr);gap:18px 14px}
+  .face.back{padding:18px 14px}
+  .face.back p{font-size:.86rem}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
+</style>
+</head>
+<body>
+
+<div class="glow"></div>
+<div class="grain"></div>
+<div class="garden" id="garden"></div>
+<div class="haze"></div>
+<canvas id="petals"></canvas>
+<canvas id="burst"></canvas>
+
+<main>
+  <!-- ========== HERO ========== -->
+  <div class="wrap">
+    <section class="hero">
+      <div class="copy">
+        <div class="kicker"><span>20 · 10</span><b>Ngày của em</b></div>
+        <h1 id="heroTitle"></h1>
+        <div class="line"></div>
+        <p>Gửi <b>Minh Loan</b>, cô gái <b>24 tuổi</b> của anh. Hôm nay là ngày của em, và chỉ <b>2 tuần nữa</b> thôi, em sẽ là <b>vợ anh</b>.</p>
+        <div class="actions">
+          <button class="btn" id="giveFlowers"><span class="dot"></span>Nhận hoa từ anh</button>
+          <a class="btn ghost" href="#wishes">Đọc lời chúc</a>
+        </div>
+      </div>
+      <div class="frame">
+        <img src="assets/peonies.jpg" alt="" style="object-position:45% 50%">
+        <div class="tag"><b>20.10</b> — anh viết cho em</div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ========== TICKER ========== -->
+  <div class="ticker"><div class="track" id="ticker"></div></div>
+
+  <!-- ========== COUNTDOWN ========== -->
+  <div class="wrap">
+    <section class="reveal">
+      <div class="cd-grid">
+        <div class="cd-photo"><img src="assets/roses-vase.jpg" alt="" style="object-position:50% 70%"></div>
+        <div>
+          <div class="label">Đếm ngược</div>
+          <h2 class="h2">Ngày em <i>về với anh</i></h2>
+          <p class="lead">Anh đã chờ ngày này lâu lắm rồi. Mỗi giây trôi qua là anh lại được gần em thêm một chút.</p>
+          <div class="countdown" id="countdown">
+            <div class="cd"><div class="n" id="dd">00</div><div class="l">Ngày</div></div>
+            <div class="cd"><div class="n" id="hh">00</div><div class="l">Giờ</div></div>
+            <div class="cd"><div class="n" id="mm">00</div><div class="l">Phút</div></div>
+            <div class="cd"><div class="n" id="ss">00</div><div class="l">Giây</div></div>
+          </div>
+          <p class="wedding-note" id="weddingNote"></p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ========== CARDS ========== -->
+  <div class="wrap">
+    <section class="reveal" id="wishes">
+      <div class="label">Lời chúc</div>
+      <h2 class="h2">Mười hai tấm thiệp <i>cho em</i></h2>
+      <p class="lead">Chạm vào từng tấm để mở. Mỗi tấm là một điều anh muốn nói với em hôm nay.</p>
+      <div class="cards" id="cards"></div>
+    </section>
+  </div>
+
+  <!-- ========== REASONS ========== -->
+  <div class="wrap">
+    <section class="reveal">
+      <div class="label">Vì sao</div>
+      <h2 class="h2">Anh yêu em <i>vì</i></h2>
+      <div class="reasons" id="reasons"></div>
+    </section>
+  </div>
+
+  <!-- ========== LETTER ========== -->
+  <div class="wrap">
+    <section class="reveal">
+      <div class="label">Thư tay</div>
+      <h2 class="h2">Một lá thư <i>nhỏ</i></h2>
+      <p class="lead">Chạm vào phong thư để mở.</p>
+      <div class="letter-grid" style="margin-top:40px">
+        <div class="env-wrap">
+          <div class="envelope" id="envelope">
+            <div class="paper"><h3>Gửi Minh Loan</h3><p>từ người sắp được làm chồng em</p></div>
+            <div class="body"></div>
+            <div class="flap"></div>
+            <div class="seal"><img src="assets/tulips-pink.jpg" alt="" style="object-position:22% 45%"></div>
+            <div class="tap">chạm để mở</div>
+          </div>
+        </div>
+        <article class="letter" id="letter">
+          <div class="stamp">20.10</div>
+          <h3>Loan yêu quý của anh,</h3>
+          <p>Hôm nay là 20/10, ngày của những người phụ nữ tuyệt vời, và với anh, đó là ngày của em. Anh không giỏi nói những lời hoa mỹ, nên anh đã tự tay làm nên trang này để gửi em một lời chúc thật đặc biệt. Anh không thể để ngày này trôi qua mà em thiếu đi một lời chúc từ anh được.</p>
+          <p>Cảm ơn em đã bước vào cuộc đời anh, đã kiên nhẫn với những đêm anh làm việc muộn, đã cười với những câu đùa nhạt của anh, và đã chọn anh để cùng đi một quãng đường dài phía trước.</p>
+          <p>24 tuổi, em đang ở quãng thời gian đẹp nhất của tuổi trẻ. Và anh thật may mắn khi chỉ còn 2 tuần nữa, anh sẽ được nắm tay em trước mặt tất cả mọi người, gọi em là <b>vợ</b>, và hứa sẽ yêu thương, che chở em suốt phần đời còn lại.</p>
+          <p>Chúc em luôn xinh đẹp, luôn rạng rỡ, luôn được yêu thương, không chỉ hôm nay mà là mỗi ngày anh còn ở bên em. Anh hứa sẽ cố gắng để em không bao giờ phải hối hận vì đã chọn anh.</p>
+          <p>Yêu em nhiều hơn tất cả những lời anh có thể viết ra.</p>
+          <div class="sign">— Chồng sắp cưới của em</div>
+        </article>
+      </div>
+    </section>
+  </div>
+
+  <!-- ========== VOWS ========== -->
+  <div class="wrap">
+    <section class="reveal">
+      <div class="label">Lời hứa</div>
+      <h2 class="h2">Những điều anh <i>sẽ giữ</i></h2>
+      <p class="lead">Không chỉ trong ngày cưới, mà là cả đời.</p>
+      <div class="vows" style="margin-top:40px">
+        <div class="vow-paper" id="vowBox"></div>
+        <div class="photo"><img src="assets/peonies-2.jpg" alt="" style="object-position:45% 40%"></div>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <div class="big">Chúc mừng 20/10, Minh Loan.</div>
+  Được làm bằng cả trái tim, bởi người đàn ông sẽ là chồng em sau 2 tuần nữa.
+  <!-- Nguồn ảnh và tác giả: xem README.md (ảnh Unsplash CC0; hoa tách nền CC BY-SA từ Wikimedia Commons) -->
+</footer>
+
+<div class="reveal-box" id="revealBox">
+  <div class="inner">
+    <button class="close" id="revealClose" aria-label="Đóng">×</button>
+    <img src="assets/roses-bouquet.jpg" alt="Bó hoa hồng tặng em" style="object-position:50% 50%">
+    <div class="cap"><h3>Tặng em, Minh Loan.</h3><p>Hoa này không héo được, vì anh gửi kèm cả trái tim anh trong đó.</p></div>
+  </div>
+</div>
+
+<button class="music" id="musicBtn" title="Bật/tắt nhạc"><svg viewBox="0 0 24 24"><path d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6z"/></svg></button>
+<audio id="bgm" loop preload="none"><source src="music.mp3" type="audio/mpeg"></audio>
+
+<!-- GSAP (CDN) cho hiệu ứng hiện theo cuộn. Không tải được thì trang vẫn chạy bình thường. -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+<script>
+/* =====================================================================
+   ⚙️ CẤU HÌNH — chỉ cần sửa ở đây
+   ===================================================================== */
+const CONFIG = {
+  name: "Minh Loan",
+  age: 24,
+  weddingDate: "2026-11-02T00:00:00",
+  ticker: ["Chúc mừng 20/10","Minh Loan","24 tuổi","2 tuần nữa","Vợ của anh","Yêu em"],
+  wishes: [
+    "Chúc em luôn xinh đẹp, rạng rỡ như những đóa hoa ngày 20/10. Em đẹp nhất khi em cười, và anh muốn thấy nụ cười ấy mỗi ngày.",
+    "Chúc cô gái 24 tuổi của anh thật nhiều sức khỏe, niềm vui và may mắn. Tuổi 24 của em sẽ là tuổi hạnh phúc nhất, vì có anh ở bên.",
+    "Cảm ơn em đã chọn anh. Hai tuần nữa thôi, anh sẽ được gọi em bằng hai tiếng thiêng liêng nhất: vợ anh.",
+    "Chúc em mỗi ngày đều được yêu thương, được nâng niu. Không chỉ riêng ngày 20/10, mà là tất cả 365 ngày trong năm.",
+    "Anh hứa sẽ là bờ vai vững chắc, là người luôn đứng sau mọi nụ cười và lau khô mọi giọt nước mắt của em.",
+    "Từ ngày có em, cuộc đời anh có thêm màu sắc, có thêm lý do để về nhà sớm, và có thêm một người để thương.",
+    "Chúc cô dâu tương lai của anh một ngày 20/10 ngọt ngào, dịu dàng và đáng yêu, y như chính em vậy.",
+    "Em là điều đẹp nhất từng đến với anh. Anh sẽ cố gắng mỗi ngày để xứng đáng với em.",
+    "Mong mọi điều em mơ ước đều thành hiện thực, và anh luôn được ở bên để chứng kiến em tỏa sáng.",
+    "Chúc em luôn mạnh mẽ, tự tin và được cả thế giới này trân trọng, như cách anh trân trọng em.",
+    "Chúc chúng mình sớm có một mái ấm nhỏ, nơi mỗi sáng anh được thấy em, và mỗi tối được ôm em ngủ.",
+    "Yêu em. Hôm nay, ngày mai và mãi mãi. Chúc mừng ngày 20/10, Minh Loan của anh."
+  ],
+  reasons: [
+    "Nụ cười của em","Cách em gọi tên anh","Em luôn tin anh","Em kiên nhẫn chờ anh những đêm làm muộn",
+    "Em xinh mà không hề biết","Đôi mắt biết nói của em","Em làm anh muốn tốt hơn mỗi ngày","Em là nhà",
+    "Giọng nói dịu dàng","Em cười khi anh kể chuyện nhạt","Em là người đầu tiên anh muốn khoe mọi thứ",
+    "Em chọn anh","Những buổi tối đi dạo cùng em","Em ôm anh rất ấm","Em là lý do anh về nhà sớm"
+  ],
+  vows: [
+    "Anh hứa:",
+    "Sẽ yêu em mỗi ngày, kể cả những ngày em không thấy mình đáng yêu.",
+    "Sẽ nắm tay em qua mọi mùa, nắng cũng như mưa.",
+    "Sẽ luôn là người đầu tiên em tìm đến, và là người cuối cùng ở lại.",
+    "Sẽ cùng em xây một mái nhà nhỏ, ấm áp và đầy tiếng cười.",
+    "Sẽ không bao giờ để em phải đi một mình.",
+    "Mãi mãi, bắt đầu từ ngày 2/11."
+  ],
+  // ảnh mặt trước thiệp (xoay vòng) — thay bằng ảnh của hai bạn càng tốt
+  // 12 ảnh, mỗi thiệp một ảnh riêng, không trùng với ảnh lớn (hero, đếm ngược, lời hứa, nhận hoa)
+  cardPhotos: [
+    {src:"assets/dense-peonies.jpg",pos:"50% 50%"},
+    {src:"assets/pastel-roses.jpg",pos:"25% 75%"},
+    {src:"assets/charming-rose.jpg",pos:"50% 50%"},
+    {src:"assets/modest-vase.jpg",pos:"40% 55%"},
+    {src:"assets/kiss-of-pink.jpg",pos:"30% 50%"},
+    {src:"assets/camelia.jpg",pos:"65% 40%"},
+    {src:"assets/pink-bouquet.jpg",pos:"45% 50%"},
+    {src:"assets/vase-pink.jpg",pos:"68% 40%"},
+    {src:"assets/holding-peony.jpg",pos:"50% 60%"},
+    {src:"assets/hydrangea.jpg",pos:"30% 60%"},
+    {src:"assets/cherry-blue.jpg",pos:"40% 40%"},
+    {src:"assets/supple-peonies.jpg",pos:"50% 45%"}
+  ],
+  // ảnh dùng để "cắt" ra cánh hoa rơi + vùng có cánh hoa trong ảnh (tỉ lệ 0..1)
+  petalSource: {src:"assets/tulips-pink.jpg", rects:[[.05,.18,.34,.6],[.47,.27,.2,.42]]},
+  // vườn hoa nền: x,y theo % màn hình; w = bề rộng px (desktop); k = tốc độ trôi theo cuộn; op = độ mờ
+  garden: [
+    // --- lớp trước: hoa to ở mép (10 bông đầu cũng là bộ hiển thị trên điện thoại) ---
+    // hue = xoay màu (độ) để đưa hoa về tông hồng; sat = độ bão hoà
+    {src:"rose-pink",   x:88, y:6,  w:190, k:.12, op:.95, r:[-6,2]},
+    {src:"daisy-side",  x:-5, y:18, w:210, k:.18, op:.9,  r:[-8,-2]},
+    {src:"tulip",       x:90, y:46, w:150, k:.24, op:.92, r:[8,14],  hue:-30, sat:.85},
+    {src:"narcissus",   x:-3, y:68, w:150, k:.2,  op:.85, r:[-10,-4]},
+    {src:"rose-cream",  x:74, y:80, w:130, k:.15, op:.85, r:[4,10]},
+    {src:"rose-fuchsia",x:20, y:84, w:120, k:.3,  op:.8,  r:[-4,4],  sat:.75},
+    {src:"daisy",       x:42, y:3,  w:90,  k:.35, op:.6,  r:[0,12]},
+    {src:"flax",        x:93, y:70, w:120, k:.22, op:.85, r:[-8,0],  hue:-25, sat:.8},
+    {src:"clover",      x:-2, y:40, w:110, k:.28, op:.85, r:[10,18], flip:true},
+    {src:"calla",       x:62, y:92, w:90,  k:.32, op:.85, r:[-6,6]},
+    // --- lớp giữa ---
+    {src:"daisy",       x:60, y:58, w:70,  k:.4,  op:.5,  r:[20,32]},
+    {src:"rose-pink",   x:14, y:36, w:80,  k:.45, op:.45, r:[6,-2],  flip:true},
+    {src:"narcissus",   x:80, y:26, w:70,  k:.4,  op:.5,  r:[-20,-8]},
+    {src:"snowdrop",    x:52, y:90, w:80,  k:.5,  op:.5,  r:[10,2],  flip:true},
+    {src:"rose-fuchsia",x:31, y:6,  w:60,  k:.5,  op:.4,  r:[-14,-6], flip:true, sat:.7},
+    {src:"clover",      x:70, y:12, w:60,  k:.42, op:.5,  r:[-4,8]},
+    {src:"tulip",       x:8,  y:92, w:70,  k:.38, op:.5,  r:[12,20], flip:true, hue:-30, sat:.85},
+    {src:"hawkweed",    x:36, y:48, w:55,  k:.44, op:.4,  r:[0,14],  hue:-60, sat:.7},
+    {src:"rose-cream",  x:46, y:22, w:60,  k:.48, op:.4,  r:[-10,2], flip:true},
+    {src:"daisy-side",  x:84, y:94, w:80,  k:.36, op:.5,  r:[6,14]},
+    // --- lớp sâu: nhỏ, mờ ---
+    {src:"daisy",       x:24, y:60, w:40,  k:.55, op:.35, r:[0,30]},
+    {src:"snowdrop",    x:68, y:40, w:45,  k:.6,  op:.35, r:[-8,6]},
+    {src:"narcissus",   x:38, y:78, w:42,  k:.58, op:.3,  r:[10,24], flip:true},
+    {src:"rose-pink",   x:55, y:8,  w:38,  k:.62, op:.35, r:[-12,0]},
+    {src:"flax",        x:76, y:66, w:40,  k:.56, op:.35, r:[4,-6],  hue:-25, sat:.8},
+    {src:"calla",       x:12, y:14, w:36,  k:.6,  op:.3,  r:[0,20],  flip:true}
+  ]
+};
+
+/* ===================================================================== */
+const LOW_END = (navigator.hardwareConcurrency||4) <= 4 || innerWidth < 700 || matchMedia('(prefers-reduced-motion: reduce)').matches;
+const rand = (a,b)=>Math.random()*(b-a)+a;
+const pick = arr=>arr[Math.floor(Math.random()*arr.length)];
+
+/* ---------- Hero title ---------- */
+(function heroTitle(){
+  // font thư pháp cần giữ nguyên cả từ để nét chữ nối liền → animate theo từng từ, không tách chữ cái
+  const el=document.getElementById('heroTitle');
+  const parts=CONFIG.name.split(' ');
+  el.innerHTML=parts.map((w,i)=>{
+    const last=i===parts.length-1;
+    return `<span class="l" style="animation-delay:${.5+i*.35}s">${last?`<em>${w}</em>`:w}</span>${last?'':'<br>'}`;
+  }).join('');
+})();
+
+/* ---------- Vườn hoa nền ---------- */
+(function garden(){
+  const g=document.getElementById('garden');
+  const mobile=innerWidth<700;
+  const list=(mobile?CONFIG.garden.slice(0,10):(LOW_END?CONFIG.garden.slice(0,18):CONFIG.garden)).map(f=>({...f, w: mobile? f.w*.6 : (innerWidth<1100? f.w*.8 : f.w)}));
+  const els=[];
+  list.forEach(f=>{
+    const d=document.createElement('div'); d.className='fl';
+    d.style.cssText=`width:${f.w}px;opacity:${mobile? f.op*.8 : f.op}`;   // điện thoại: mờ hơn chút để không che chữ
+    const im=document.createElement('img'); im.src=`assets/flowers/${f.src}.webp`; im.alt=''; im.loading='lazy';
+    const blur = f.blur ?? (f.w<=45 ? 1.6 : 0);          // hoa ở lớp sâu làm mờ nhẹ cho có chiều sâu, mơ màng
+    const filt=(f.hue||f.sat||blur)?`filter:hue-rotate(${f.hue||0}deg) saturate(${f.sat||1}) blur(${blur}px);`:'';   // filter tĩnh trên ảnh
+    im.style.cssText=`--r0:${f.r[0]}deg;--r1:${f.r[1]}deg;--sx:${f.flip?-1:1};${filt}animation-duration:${rand(9,15)}s;animation-delay:${-rand(0,15)}s`;
+    d.appendChild(im); g.appendChild(d); els.push({el:d,f});
+  });
+  let H=innerHeight, W=innerWidth, ticking=false;
+  addEventListener('resize',()=>{H=innerHeight;W=innerWidth;place();});
+  function place(){
+    const sy=scrollY;
+    for(const {el,f} of els){
+      const h=f.w*1.3, span=H+2*h;                       // cho hoa "quay vòng": trôi lên hết thì vào lại từ dưới
+      let y=((f.y/100*H - sy*f.k + h) % span + span) % span - h;
+      el.style.transform=`translate3d(${f.x/100*W}px,${y}px,0)`;
+    }
+    ticking=false;
+  }
+  addEventListener('scroll',()=>{ if(!ticking){ ticking=true; requestAnimationFrame(place); } },{passive:true});
+  place();
+})();
+
+/* ---------- Ticker ---------- */
+(function ticker(){
+  const el=document.getElementById('ticker');
+  const items=CONFIG.ticker.map(t=>`<span>${t}</span>`).join('');
+  el.innerHTML=items+items+items+items;
+})();
+
+/* ---------- Cánh hoa thật: cắt từ ảnh tulip theo hình cánh hoa ---------- */
+const Petals=(function(){
+  const sprites=[]; const img=new Image(); img.src=CONFIG.petalSource.src;
+  const ready=new Promise(res=>{ if(img.complete&&img.naturalWidth) res(); else { img.onload=res; img.onerror=res; } });
+  function path(ctx,w,h){ ctx.beginPath(); ctx.moveTo(w/2,0); ctx.bezierCurveTo(w*1.08,h*.12,w*1.02,h*.78,w/2,h); ctx.bezierCurveTo(-w*.02,h*.78,-w*.08,h*.12,w/2,0); ctx.closePath(); }
+  function make(w,h){
+    const c=document.createElement('canvas'); c.width=w; c.height=h; const ctx=c.getContext('2d');
+    const iw=img.naturalWidth, ih=img.naturalHeight, R=pick(CONFIG.petalSource.rects);
+    const cw=iw*R[2]*rand(.35,.6), ch=cw*(h/w);
+    const sx=iw*R[0]+rand(0,Math.max(1,iw*R[2]-cw)), sy=ih*R[1]+rand(0,Math.max(1,ih*R[3]-ch));
+    ctx.save(); path(ctx,w,h); ctx.clip();
+    ctx.drawImage(img,sx,sy,cw,ch,-w*.1,-h*.1,w*1.2,h*1.2);
+    const g=ctx.createLinearGradient(0,0,w,h); g.addColorStop(0,'rgba(255,255,255,.3)'); g.addColorStop(.5,'rgba(255,255,255,0)'); g.addColorStop(1,'rgba(90,30,20,.25)');
+    ctx.fillStyle=g; ctx.fillRect(0,0,w,h); ctx.restore();
+    ctx.globalCompositeOperation='destination-in';
+    const rg=ctx.createRadialGradient(w/2,h/2,Math.min(w,h)*.25,w/2,h/2,Math.max(w,h)*.62);
+    rg.addColorStop(0,'rgba(0,0,0,1)'); rg.addColorStop(1,'rgba(0,0,0,.7)'); ctx.fillStyle=rg; ctx.fillRect(0,0,w,h);
+    return c;
+  }
+  return { sprites, ready, build(){ if(img.naturalWidth) for(let i=0;i<10;i++) sprites.push(make(40,60)); } };
+})();
+
+/* ---------- Cánh hoa rơi (nhẹ, thưa) ---------- */
+(function falling(){
+  const c=document.getElementById('petals'), ctx=c.getContext('2d');
+  let W,H,P=[];
+  const N = innerWidth<600 ? 14 : (LOW_END ? 20 : 30);
+  function resize(){W=c.width=innerWidth;H=c.height=innerHeight}
+  resize(); addEventListener('resize',resize);
+  const mk=init=>({x:rand(0,W),y:init?rand(-H,H):rand(-120,-20),s:rand(.5,1),vy:rand(.3,.8),vx:rand(-.2,.2),ang:rand(0,6.28),va:rand(-.015,.015),sway:rand(0,6.28),sv:rand(.006,.016),a:rand(.4,.75),sp:Math.floor(rand(0,10))});
+  for(let i=0;i<N;i++)P.push(mk(true));
+  function draw(){
+    const S=Petals.sprites; ctx.clearRect(0,0,W,H);
+    for(const p of P){
+      p.sway+=p.sv; p.x+=p.vx+Math.sin(p.sway)*.5; p.y+=p.vy; p.ang+=p.va;
+      if(p.y>H+40||p.x<-40||p.x>W+40) Object.assign(p,mk(false));
+      const im=S[p.sp%S.length], w=im.width*p.s, h=im.height*p.s;
+      ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.ang); ctx.globalAlpha=p.a; ctx.drawImage(im,-w/2,-h/2,w,h); ctx.restore();
+    }
+    requestAnimationFrame(draw);
+  }
+  Petals.ready.then(()=>{ Petals.build(); if(Petals.sprites.length) draw(); });
+})();
+
+/* ---------- Nổ cánh hoa (dừng khi hết hạt) ---------- */
+const Burst=(function(){
+  const c=document.getElementById('burst'), ctx=c.getContext('2d');
+  let W,H,parts=[],running=false;
+  function resize(){W=c.width=innerWidth;H=c.height=innerHeight}
+  resize(); addEventListener('resize',resize);
+  const MAX = LOW_END ? 160 : 420;
+  function spawn(x,y,n=24,big=false){
+    if(!Petals.sprites.length) return;
+    if(LOW_END) n=Math.ceil(n*.6);
+    for(let i=0;i<n && parts.length<MAX;i++){
+      const a=rand(0,Math.PI*2), sp=rand(big?4:2,big?12:6);
+      parts.push({x,y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp-rand(2,5),g:.15,life:1,dec:rand(.007,.014),s:rand(big?.7:.5,big?1.3:.9),sp:Math.floor(rand(0,10)),rot:rand(0,6),vr:rand(-.12,.12)});
+    }
+    if(!running){running=true;requestAnimationFrame(loop);}
+  }
+  function loop(){
+    ctx.clearRect(0,0,W,H);
+    parts=parts.filter(p=>p.life>0);
+    if(!parts.length){running=false;return;}
+    const S=Petals.sprites;
+    for(const p of parts){
+      p.x+=p.vx;p.y+=p.vy;p.vy+=p.g;p.vx*=.985;p.life-=p.dec;p.rot+=p.vr;
+      const im=S[p.sp%S.length], w=im.width*p.s, h=im.height*p.s;
+      ctx.save();ctx.globalAlpha=Math.max(p.life,0);ctx.translate(p.x,p.y);ctx.rotate(p.rot);ctx.drawImage(im,-w/2,-h/2,w,h);ctx.restore();
+    }
+    requestAnimationFrame(loop);
+  }
+  return {spawn};
+})();
+addEventListener('pointerdown',e=>{ if(e.target.closest('.btn,.music,.reveal-box,a')) return; Burst.spawn(e.clientX,e.clientY,8); });
+
+/* ---------- Nhận hoa ---------- */
+(function give(){
+  const btn=document.getElementById('giveFlowers'), box=document.getElementById('revealBox');
+  btn.addEventListener('click',()=>{
+    const r=btn.getBoundingClientRect();
+    Burst.spawn(r.left+r.width/2,r.top+r.height/2,60,true);
+    let k=0; const t=setInterval(()=>{ Burst.spawn(rand(0,innerWidth),rand(0,innerHeight*.6),14,true); if(++k>6)clearInterval(t); },180);
+    setTimeout(()=>box.classList.add('show'),650);
+  });
+  document.getElementById('revealClose').addEventListener('click',()=>box.classList.remove('show'));
+  box.addEventListener('click',e=>{ if(e.target===box) box.classList.remove('show'); });
+})();
+
+/* ---------- Countdown ---------- */
+(function countdown(){
+  const target=new Date(CONFIG.weddingDate).getTime(), d=new Date(CONFIG.weddingDate);
+  document.getElementById('weddingNote').innerHTML=`Ngày <b>${d.getDate()}/${d.getMonth()+1}/${d.getFullYear()}</b>, ngày <b>${CONFIG.name}</b> chính thức trở thành vợ anh.`;
+  const pad=n=>String(n).padStart(2,'0');
+  function tick(){
+    const diff=target-Date.now();
+    if(diff<=0){ document.getElementById('countdown').innerHTML='<div class="cd" style="grid-column:1/-1"><div class="n" style="font-size:2.4rem;font-style:italic">Đã là vợ anh rồi.</div></div>'; return; }
+    const s=Math.floor(diff/1000);
+    document.getElementById('dd').textContent=pad(Math.floor(s/86400));
+    document.getElementById('hh').textContent=pad(Math.floor(s%86400/3600));
+    document.getElementById('mm').textContent=pad(Math.floor(s%3600/60));
+    document.getElementById('ss').textContent=pad(s%60);
+    setTimeout(tick,1000);
+  }
+  tick();
+})();
+
+/* ---------- Thiệp ---------- */
+(function cards(){
+  const wrap=document.getElementById('cards');
+  CONFIG.wishes.forEach((text,i)=>{
+    const ph=CONFIG.cardPhotos[i%CONFIG.cardPhotos.length];
+    const p=document.createElement('div'); p.className='pola';
+    p.style.cssText=`animation-duration:${rand(5,8)}s;animation-delay:${-rand(0,8)}s`;
+    p.innerHTML=`<div class="card">
+      <div class="face front">
+        <img src="${ph.src}" alt="" style="object-position:${ph.pos}" loading="lazy">
+        <div class="n">${String(i+1).padStart(2,'0')} / ${CONFIG.wishes.length}</div>
+        <div class="open"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+      </div>
+      <div class="face back"><div class="q">“</div><p>${text}</p><div class="sig">— yêu em</div></div>
+    </div>`;
+    p.addEventListener('click',()=>{ p.classList.toggle('flipped'); const r=p.getBoundingClientRect(); Burst.spawn(r.left+r.width/2,r.top+r.height/2,14); });
+    const slot=document.createElement('div'); slot.className='slot'; slot.appendChild(p); wrap.appendChild(slot);
+  });
+})();
+
+/* ---------- Lý do ---------- */
+(function reasons(){ document.getElementById('reasons').innerHTML=CONFIG.reasons.map(t=>`<span>${t}</span>`).join(''); })();
+
+/* ---------- Phong thư ---------- */
+(function envelope(){
+  const env=document.getElementById('envelope'), letter=document.getElementById('letter');
+  env.addEventListener('click',()=>{
+    if(env.classList.contains('open')) return;
+    env.classList.add('open');
+    const r=env.getBoundingClientRect(); Burst.spawn(r.left+r.width/2,r.top+r.height/3,36,true);
+    setTimeout(()=>{ letter.classList.add('show'); if(innerWidth<860) setTimeout(()=>letter.scrollIntoView({behavior:'smooth',block:'start'}),200); },800);
+  });
+})();
+
+/* ---------- Lời hứa: gõ chữ ---------- */
+(function vows(){
+  const box=document.getElementById('vowBox'), lines=CONFIG.vows;
+  let started=false;
+  function run(){
+    if(started) return; started=true;
+    let li=0, ci=0, out="";
+    function step(){
+      if(li>=lines.length){ box.innerHTML=out; return; }
+      const line=lines[li], isHead=li===0, isEnd=li===lines.length-1;
+      const open=isHead?'<h3>':(isEnd?'<div class="end">':'<div>'), close=isHead?'</h3>':'</div>';
+      if(ci>=line.length){ out+=open+line+close; li++; ci=0; box.innerHTML=out; setTimeout(step,240); return; }
+      ci++; box.innerHTML=out+open+line.slice(0,ci)+'<span class="cursor"></span>'+close;
+      setTimeout(step, line[ci-1]===" "?14:rand(20,50));
+    }
+    step();
+  }
+  new IntersectionObserver(es=>{ es.forEach(e=>{ if(e.isIntersecting) run(); }); },{threshold:.3}).observe(box);
+})();
+
+/* ---------- Hiện theo cuộn ---------- */
+(function reveal(){
+  const els=document.querySelectorAll('.reveal');
+  if(window.gsap && window.ScrollTrigger){
+    gsap.registerPlugin(ScrollTrigger);
+    els.forEach(el=>{ el.classList.add('gs'); gsap.from(el,{y:50,opacity:0,duration:1.1,ease:'power3.out',scrollTrigger:{trigger:el,start:'top 85%',once:true}}); });
+    gsap.from('.slot',{y:60,opacity:0,duration:.9,ease:'power3.out',stagger:.06,scrollTrigger:{trigger:'#cards',start:'top 82%',once:true}});
+    gsap.from('.reasons span',{y:16,opacity:0,duration:.6,stagger:.04,scrollTrigger:{trigger:'#reasons',start:'top 85%',once:true}});
+    gsap.from('.cd',{opacity:0,y:10,duration:.7,stagger:.1,scrollTrigger:{trigger:'#countdown',start:'top 85%',once:true}});
+    return;
+  }
+  const io=new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} }),{threshold:.12});
+  els.forEach(el=>io.observe(el));
+})();
+
+/* ---------- Nhạc nền (hiện nút khi có music.mp3) ---------- */
+(function music(){
+  const a=document.getElementById('bgm'), b=document.getElementById('musicBtn');
+  fetch('music.mp3',{method:'HEAD'}).then(r=>{ if(r.ok) b.style.display='grid'; }).catch(()=>{});
+  b.addEventListener('click',()=>{ if(a.paused){ a.play().then(()=>b.classList.add('on')).catch(()=>{}); } else { a.pause(); b.classList.remove('on'); } });
+})();
+</script>
+</body>
+</html>
