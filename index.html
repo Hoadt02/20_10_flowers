@@ -193,11 +193,37 @@ footer{position:relative;z-index:10;text-align:center;padding:80px 24px 90px;col
 footer .big{font-family:'Corinthia',cursive;font-weight:700;font-size:clamp(3rem,8vw,5.6rem);color:var(--tulip);line-height:1;margin-bottom:14px;font-style:normal}
 footer .credit{font-size:.7rem;opacity:.6;margin-top:22px;letter-spacing:.05em}
 
-/* ================= MUSIC ================= */
-.music{position:fixed;right:18px;bottom:18px;z-index:65;width:50px;height:50px;border-radius:50%;border:1px solid var(--line);background:var(--paper);box-shadow:var(--shadow);cursor:pointer;display:none;place-items:center;color:var(--ink)}
-.music svg{width:22px;height:22px;fill:currentColor}
-.music.on{animation:spin 4s linear infinite}
+/* ================= MUSIC PLAYER ================= */
+.player{position:fixed;right:18px;bottom:18px;z-index:65;display:flex;align-items:center;gap:12px;padding:8px 10px 8px 8px;border-radius:999px;
+  background:rgba(255,250,251,.92);border:1px solid rgba(214,87,122,.18);box-shadow:0 14px 40px rgba(120,40,70,.18);
+  opacity:0;transform:translateY(20px);animation:fadeUp 1s 2.6s cubic-bezier(.2,.8,.2,1) forwards}
+.player .disc{position:relative;width:46px;height:46px;border-radius:50%;flex:none;cursor:pointer;border:none;padding:0;
+  background:radial-gradient(circle,#2b1a22 0 30%,#3a2530 31% 33%,#2b1a22 34% 52%,#3a2530 53% 55%,#2b1a22 56% 100%);box-shadow:0 4px 12px rgba(43,26,34,.35)}
+.player .disc img{position:absolute;inset:28%;width:44%;height:44%;border-radius:50%;object-fit:cover;object-position:22% 45%}
+.player .disc::after{content:"";position:absolute;left:50%;top:50%;width:5px;height:5px;margin:-2.5px 0 0 -2.5px;border-radius:50%;background:var(--paper)}
+.player .disc.spin{animation:spin 6s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
+.player .meta{display:flex;flex-direction:column;line-height:1.15;min-width:0;max-width:170px}
+.player .t{font-family:'Corinthia',cursive;font-weight:700;font-size:1.45rem;color:var(--tulip);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.player .a{font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);white-space:nowrap}
+.player .eq{display:flex;align-items:flex-end;gap:2px;height:16px;width:18px;flex:none}
+.player .eq i{display:block;width:3px;height:30%;border-radius:2px;background:var(--tulip);transform-origin:bottom}
+.player.playing .eq i{animation:eq 1s ease-in-out infinite}
+.player.playing .eq i:nth-child(2){animation-delay:-.3s;animation-duration:.8s}
+.player.playing .eq i:nth-child(3){animation-delay:-.6s;animation-duration:1.15s}
+.player.playing .eq i:nth-child(4){animation-delay:-.15s;animation-duration:.9s}
+@keyframes eq{0%,100%{height:25%}50%{height:100%}}
+.player .btn-i{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--paper);display:grid;place-items:center;cursor:pointer;color:var(--ink);flex:none;transition:background .2s,color .2s}
+.player .btn-i:hover{background:var(--tulip);color:#fff;border-color:var(--tulip)}
+.player .btn-i svg{width:16px;height:16px;fill:currentColor}
+.player .btn-i .off{display:none}
+.player.muted .btn-i .on{display:none}
+.player.muted .btn-i .off{display:block}
+.player .hint{position:absolute;right:6px;bottom:calc(100% + 12px);white-space:nowrap;background:var(--ink);color:#fff;font-size:.86rem;font-style:italic;padding:8px 14px;border-radius:14px;
+  box-shadow:0 10px 24px rgba(43,26,34,.25);animation:floatY 2.6s ease-in-out infinite;pointer-events:none;transition:opacity .4s}
+.player .hint::after{content:"";position:absolute;right:22px;top:100%;border:7px solid transparent;border-top-color:var(--ink)}
+.player.started .hint{opacity:0}
+@media (max-width:600px){ .player{right:12px;bottom:12px;gap:8px;padding:6px 8px 6px 6px} .player .meta{max-width:110px} .player .t{font-size:1.25rem} .player .a{font-size:.64rem} }
 
 /* ================= REVEAL ON SCROLL ================= */
 .reveal{opacity:0;transform:translateY(40px);transition:opacity .9s ease,transform .9s cubic-bezier(.2,.8,.2,1)}
@@ -355,8 +381,17 @@ footer .credit{font-size:.7rem;opacity:.6;margin-top:22px;letter-spacing:.05em}
   </div>
 </div>
 
-<button class="music" id="musicBtn" title="Bật/tắt nhạc"><svg viewBox="0 0 24 24"><path d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6z"/></svg></button>
-<audio id="bgm" loop preload="none"><source src="music.mp3" type="audio/mpeg"></audio>
+<div class="player" id="player" aria-label="Nhạc nền">
+  <div class="hint">Chạm để nghe nhạc anh chọn cho em ♪</div>
+  <button class="disc" id="playerDisc" title="Phát / tạm dừng"><img src="assets/tulips-pink.jpg" alt=""></button>
+  <div class="meta"><span class="t" id="trackTitle">Nocturne</span><span class="a" id="trackArtist">Chopin</span></div>
+  <div class="eq"><i></i><i></i><i></i><i></i></div>
+  <button class="btn-i" id="muteBtn" title="Tắt / bật âm thanh" aria-label="Tắt hoặc bật âm thanh">
+    <svg class="on" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 8v8a4.5 4.5 0 0 0 2.5-4zM14 3.2v2.1a7 7 0 0 1 0 13.4v2.1a9 9 0 0 0 0-17.6z"/></svg>
+    <svg class="off" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.6 3 2.7-2.7-1.4-1.4-2.7 2.7-2.7-2.7-1.4 1.4 2.7 2.7-2.7 2.7 1.4 1.4 2.7-2.7 2.7 2.7 1.4-1.4z"/></svg>
+  </button>
+</div>
+<audio id="bgm" preload="none"></audio>
 
 <!-- GSAP (CDN) cho hiệu ứng hiện theo cuộn. Không tải được thì trang vẫn chạy bình thường. -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
@@ -418,6 +453,12 @@ const CONFIG = {
   ],
   // ảnh dùng để "cắt" ra cánh hoa rơi + vùng có cánh hoa trong ảnh (tỉ lệ 0..1)
   petalSource: {src:"assets/tulips-pink.jpg", rects:[[.05,.18,.34,.6],[.47,.27,.2,.42]]},
+  // nhạc nền: phát lần lượt rồi quay vòng. Muốn dùng bài khác thì thả file mp3 vào assets/music và sửa ở đây
+  music: [
+    {src:"assets/music/nocturne.mp3",   title:"Nocturne",     artist:"Chopin · Op. 9 số 2"},
+    {src:"assets/music/gymnopedie.mp3", title:"Gymnopédie",   artist:"Satie · số 1"}
+  ],
+  musicVolume: .55,
   // vườn hoa nền: x,y theo % màn hình; w = bề rộng px (desktop); k = tốc độ trôi theo cuộn; op = độ mờ
   garden: [
     // --- lớp trước: hoa to ở mép (10 bông đầu cũng là bộ hiển thị trên điện thoại) ---
@@ -580,7 +621,7 @@ const Burst=(function(){
   }
   return {spawn};
 })();
-addEventListener('pointerdown',e=>{ if(e.target.closest('.btn,.music,.reveal-box,a')) return; Burst.spawn(e.clientX,e.clientY,8); });
+addEventListener('pointerdown',e=>{ if(e.target.closest('.btn,.player,.reveal-box,a')) return; Burst.spawn(e.clientX,e.clientY,8); });
 
 /* ---------- Nhận hoa ---------- */
 (function give(){
@@ -682,11 +723,49 @@ addEventListener('pointerdown',e=>{ if(e.target.closest('.btn,.music,.reveal-box
   els.forEach(el=>io.observe(el));
 })();
 
-/* ---------- Nhạc nền (hiện nút khi có music.mp3) ---------- */
+/* ---------- Nhạc nền ----------
+   Trình duyệt không cho tự phát nhạc khi chưa có thao tác, nên nhạc bắt đầu ở lần chạm/bấm đầu tiên
+   (bấm "Nhận hoa từ anh", lật thiệp, hay chạm bất kỳ đâu). Nút loa để tắt/bật, lựa chọn được ghi nhớ. */
 (function music(){
-  const a=document.getElementById('bgm'), b=document.getElementById('musicBtn');
-  fetch('music.mp3',{method:'HEAD'}).then(r=>{ if(r.ok) b.style.display='grid'; }).catch(()=>{});
-  b.addEventListener('click',()=>{ if(a.paused){ a.play().then(()=>b.classList.add('on')).catch(()=>{}); } else { a.pause(); b.classList.remove('on'); } });
+  const a=document.getElementById('bgm'), P=document.getElementById('player');
+  const disc=document.getElementById('playerDisc'), mute=document.getElementById('muteBtn');
+  const tT=document.getElementById('trackTitle'), tA=document.getElementById('trackArtist');
+  const list=CONFIG.music, VOL=CONFIG.musicVolume;
+  let i=0, fadeT=null, started=false;
+  const store={ get(){ try{ return localStorage.getItem('ml-muted'); }catch(e){ return null; } }, set(v){ try{ localStorage.setItem('ml-muted',v); }catch(e){} } };
+  let muted = store.get()==='1';
+
+  function load(k){ i=k%list.length; a.src=list[i].src; tT.textContent=list[i].title; tA.textContent=list[i].artist; }
+  function fade(to,ms,done){
+    clearInterval(fadeT); const from=a.volume, steps=Math.max(1,Math.round(ms/50)); let s=0;
+    fadeT=setInterval(()=>{ s++; a.volume=Math.min(1,Math.max(0,from+(to-from)*s/steps)); if(s>=steps){ clearInterval(fadeT); done&&done(); } },50);
+  }
+  function ui(){ const playing=!a.paused && !muted; P.classList.toggle('playing',playing); P.classList.toggle('muted',muted); disc.classList.toggle('spin',playing); }
+  function play(){ a.volume=0; a.play().then(()=>{ started=true; P.classList.add('started'); fade(VOL,2500); ui(); }).catch(()=>{}); }
+  function pause(){ fade(0,600,()=>{ a.pause(); ui(); }); }
+
+  load(0);
+  a.addEventListener('ended',()=>{ load(i+1); if(!muted) play(); });
+  a.addEventListener('play',ui); a.addEventListener('pause',ui);
+
+  // lần chạm đầu tiên ở bất kỳ đâu → bật nhạc (trừ khi đã chọn tắt tiếng từ lần trước)
+  function first(e){
+    if(e.target.closest('#muteBtn')) return;
+    removeEventListener('pointerdown',first,true); removeEventListener('keydown',first,true);
+    if(!muted && a.paused) play(); else { started=true; P.classList.add('started'); ui(); }
+  }
+  addEventListener('pointerdown',first,true); addEventListener('keydown',first,true);
+
+  mute.addEventListener('click',()=>{
+    muted=!muted; store.set(muted?'1':'0');
+    if(muted) pause(); else play();
+    P.classList.add('started'); ui();
+  });
+  disc.addEventListener('click',()=>{ if(!started) return; if(a.paused||muted){ muted=false; store.set('0'); play(); } else { muted=true; store.set('1'); pause(); } ui(); });
+
+  // chuyển sang tab khác thì nhạc nhỏ dần rồi dừng, quay lại thì phát tiếp
+  document.addEventListener('visibilitychange',()=>{ if(!started||muted) return; if(document.hidden) pause(); else play(); });
+  ui();
 })();
 </script>
 </body>

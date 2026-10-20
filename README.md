@@ -72,9 +72,21 @@ Mỗi vị trí dùng một ảnh riêng, không ảnh nào lặp lại.
 Nếu thay ảnh cắt cánh hoa (`petalSource`), chỉnh lại `rects` cho đúng vùng có cánh hoa
 (mỗi rect là `[x, y, rộng, cao]` theo tỉ lệ 0..1 của ảnh).
 
-### Thêm nhạc nền (tuỳ chọn)
+### Nhạc nền
 
-Đặt file `music.mp3` cạnh `index.html`. Nút nhạc ở góc dưới phải tự hiện khi có file.
+Trình phát dạng đĩa than ở góc dưới phải, phát lần lượt rồi quay vòng:
+
+| File | Bài | Bản thu | Giấy phép |
+|---|---|---|---|
+| `assets/music/nocturne.mp3` | Chopin, Nocturne Op. 9 số 2 | Frank Lévy | Public domain |
+| `assets/music/gymnopedie.mp3` | Satie, Gymnopédie số 1 | Michael Laucke | Public domain |
+
+- Trình duyệt không cho tự phát nhạc, nên nhạc bắt đầu ở **lần chạm đầu tiên** bất kỳ đâu trên trang
+  (ví dụ bấm "Nhận hoa từ anh"). Bong bóng "Chạm để nghe nhạc" nhắc việc này.
+- Nút loa tắt/bật tiếng, nhạc nhỏ dần và to dần cho êm. Lựa chọn tắt tiếng được nhớ cho lần mở sau.
+- Chạm vào đĩa than cũng là tạm dừng / phát tiếp. Chuyển tab thì nhạc tự dừng, quay lại thì phát tiếp.
+- Đổi bài: thả file mp3 vào `assets/music/` rồi sửa mảng `music` trong `CONFIG`. Âm lượng: `musicVolume` (0..1).
+  Nếu dùng bài hát Việt Nam có bản quyền, chỉ nên để trang ở chế độ chia sẻ riêng.
 
 ## Deploy miễn phí
 
